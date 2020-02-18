@@ -1,0 +1,221 @@
+﻿@using System.Web.UI.WebControls
+@using GoodApp.Backend.Helpers
+@using GoodApp.Data
+@model IEnumerable<GoodApp.Data.Views.DeedView>
+
+@{
+    ViewBag.Title = "Deeds";
+    Layout = "~/Views/Shared/SBAdminV2Layout.cshtml";
+    var linkFormat = ViewBag.PreLink + "&pageIndex={pageIndex}&pageSize={pageSize}&search={search}&orderBy={orderBy}&isAsc={isAsc}&userId={userId}&challengeId={challengeId}";
+}
+
+<div class="row">
+    <div class="col-lg-12">
+        <h3 class="page-header nomargin">
+           @{
+                if (string.IsNullOrEmpty(ViewBag.SubTitle))
+                {
+                    <a href="/Deed">@ViewBag.Title</a>
+                }
+                else
+                {
+                    @Html.Raw(ViewBag.SubTitle)
+                }
+            }
+        </h3>
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-lg-12">
+
+        <div class="row">
+            <div class="col-md-6">
+              
+            </div>
+            <div class="col-md-6">
+                <p class=" pull-right">
+                    <div class="input-group">
+                        <div class="input-group-btn  @(ViewBag.Type=="CHALLENGE"?"hidden":"")">
+                            <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown"> @(ViewBag.DisplayChallenge.ToString()) <span class="caret"></span></button>
+                            <ul class="dropdown-menu">
+                                @{
+                                    var challengeFormat = linkFormat.Replace("{search}", ViewBag.Search.ToString()).Replace("{orderBy}", ViewBag.OrderBy.ToString()).Replace("{isAsc}", ViewBag.IsAsc.ToString()).Replace("{pageIndex}", "1").Replace("{pageSize}", ViewBag.PageSize.ToString()).Replace("{userId}", ViewBag.UserId.ToString());
+                                    <li role="presentation"><a role="menuitem" tabindex="-1" href="@(challengeFormat.Replace("{challengeId}","All"))">All Challenges</a></li>
+                                    <li role="presentation" class="divider"></li>
+                                    foreach (var challenge in ViewBag.Challenges)
+                                    {
+                                        <li role="presentation"><a role="menuitem" tabindex="-1" href="@(challengeFormat.Replace("{challengeId}",challenge.ChallengeId.ToString()))">@challenge.Name</a></li>
+                                    }
+                                }
+                            </ul>
+                        </div>
+                        <div class="input-group-btn  @(ViewBag.Type=="USER"?"hidden":"")">
+                            <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown"> @ViewBag.DisplayUser.ToString() <span class="caret"></span></button>
+                            <ul class="dropdown-menu">
+                                @{
+                                    var userFormat = linkFormat.Replace("{search}", ViewBag.Search.ToString()).Replace("{orderBy}", ViewBag.OrderBy.ToString()).Replace("{isAsc}", ViewBag.IsAsc.ToString()).Replace("{pageIndex}", "1").Replace("{pageSize}", ViewBag.PageSize.ToString()).Replace("{challengeId}", ViewBag.ChallengeId.ToString());
+                                    <li role="presentation"><a role="menuitem" tabindex="-1" href="@(userFormat.Replace("{userId}","All"))">All Users</a></li>
+                                    <li role="presentation" class="divider"></li>
+                                    foreach (var user in ViewBag.Users)
+                                    {
+                                        <li role="presentation"><a role="menuitem" tabindex="-1" href="@(userFormat.Replace("{userId}",user.Id))">@(user.FirstName + " " + user.LastName)</a></li>
+                                    }
+                                }
+                            </ul>
+                        </div>
+                        <input type="text" id="txtSearch" class="form-control" value="@ViewBag.Search.ToString()" placeholder="Search by email or name">
+                        <span class="input-group-btn">
+                            @{
+                                var searchFormat = linkFormat.Replace("{orderBy}", ViewBag.OrderBy.ToString()).Replace("{isAsc}", ViewBag.IsAsc.ToString()).Replace("{pageIndex}", "1").Replace("{pageSize}", ViewBag.PageSize.ToString()).Replace("{challengeId}", ViewBag.ChallengeId.ToString()).Replace("{userId}", ViewBag.UserId.ToString());
+                                <input type="hidden" id="hidSearchUrl" value="@searchFormat" />
+                            }
+                            <button class="btn btn-primary" id="btnSearch" type="button">
+                                <i class="fa fa-search-plus fa-lg"></i>
+                            </button>
+                        </span>
+                    </div><!-- /input-group -->
+                </p>
+            </div>
+        </div>
+        <div class="table-responsive">
+            <div class="form-inline" role="grid">
+                <table class="table table-striped table-bordered table-hover user-list">
+                    <thead>
+                        <tr>
+                            @{
+                                var headFormat = linkFormat.Replace("{search}", ViewBag.Search.ToString()).Replace("{isAsc}", (!ViewBag.IsAsc).ToString()).Replace("{pageIndex}", ViewBag.PageIndex.ToString()).Replace("{pageSize}", ViewBag.PageSize.ToString()).Replace("{challengeId}", ViewBag.ChallengeId.ToString()).Replace("{userId}", ViewBag.UserId.ToString());
+                                var pagerModel = new GoodApp.Backend.Models.PagerModel()
+                                    {
+                                        PageIndex = ViewBag.PageIndex,
+                                        PageSize = ViewBag.PageSize,
+                                        ItemCount = ViewBag.ItemCount
+                                    };
+                                var rowIndex =1; //pagerModel.StartItem;
+		                    }
+                            <th class="text-center fixed-width-32">#</th>
+                            <th class="text-center">
+                                <a href="@(headFormat.Replace("{orderBy}","CreatorFirstName"))">Creator</a>
+                                <span class="glyphicon glyphicon-arrow-@(ViewBag.IsAsc?"up":"down") @(ViewBag.OrderBy=="CreatorFirstName"?"":"hidden")"></span>
+                            </th>
+                            <th class="text-center">
+                                <a href="@(headFormat.Replace("{orderBy}", "DeedDate"))">@Html.DisplayNameFor(model => model.DeedDate)</a>
+                                <span class="glyphicon glyphicon-arrow-@(ViewBag.IsAsc?"up":"down") @(ViewBag.OrderBy=="DeedDate"?"":"hidden")"></span>
+                            </th>
+                            <th class="text-center">
+                                <a href="@(headFormat.Replace("{orderBy}", "Location"))">@Html.DisplayNameFor(model => model.Location)</a>
+                                <span class="glyphicon glyphicon-arrow-@(ViewBag.IsAsc?"up":"down") @(ViewBag.OrderBy == "Location" ? "" : "hidden")"></span>
+                            </th>
+                            @*<th class="text-center">
+                                @Html.DisplayNameFor(model => model.Lat)
+                            </th>*@
+                            @*<th class="text-center">
+                                @Html.DisplayNameFor(model => model.Lon)
+                            </th>*@
+                            <th>
+                                <a href="@(headFormat.Replace("{orderBy}", "ChallengeName"))">@Html.DisplayNameFor(model => model.ChallengeName)</a>
+                                <span class="glyphicon glyphicon-arrow-@(ViewBag.IsAsc?"up":"down") @(ViewBag.OrderBy=="ChallengeName"?"":"hidden")"></span>
+                            </th>
+                            <th class="text-center">
+                                <a href="@(headFormat.Replace("{orderBy}", "TagUserFirstName"))">@Html.DisplayNameFor(model => model.TagUserFullName)</a>
+                                <span class="glyphicon glyphicon-arrow-@(ViewBag.IsAsc?"up":"down") @(ViewBag.OrderBy == "TagUserFirstName" ? "" : "hidden")"></span>
+                            </th>
+                            <th class="text-center">
+                                <a href="@(headFormat.Replace("{orderBy}", "Rating"))">@Html.DisplayNameFor(model => model.Rating)</a>
+                                <span class="glyphicon glyphicon-arrow-@(ViewBag.IsAsc?"up":"down") @(ViewBag.OrderBy == "Rating" ? "" : "hidden")"></span>
+                            </th>
+                            <th>
+                                @Html.DisplayNameFor(model => model.Comment)
+                            </th>
+                            <th class="text-center">
+                                <a href="@(headFormat.Replace("{orderBy}", "DueDate"))">@Html.DisplayNameFor(model => model.DueDate)</a>
+                                <span class="glyphicon glyphicon-arrow-@(ViewBag.IsAsc?"up":"down") @(ViewBag.OrderBy=="DueDate"?"":"hidden")"></span>
+                            </th>
+                            <th class="text-center">
+                                <a href="@(headFormat.Replace("{orderBy}", "CreateDate"))">@Html.DisplayNameFor(model => model.CreateDate)</a>
+                                <span class="glyphicon glyphicon-arrow-@(ViewBag.IsAsc?"up":"down") @(ViewBag.OrderBy=="CreateDate"?"":"hidden")"></span>
+                            </th>
+                            
+                            @*<th class="text-center">
+                                <a href="@(headFormat.Replace("{orderBy}","IsValid"))" data-toggle="tooltip" data-placement="top" title="DeedDate < DueDate">@Html.DisplayNameFor(model => model.IsValid)</a>
+                                <span class="glyphicon glyphicon-arrow-@(ViewBag.IsAsc?"up":"down") @(ViewBag.OrderBy=="IsValid"?"":"hidden")"></span>
+                            </th>*@
+                            <th class="fixed-width-50"></th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (var item in Model)
+                        {
+                            <tr>
+                                <td class="text-center">
+                                    <span class="badge">@(rowIndex++)</span>
+                                </td>
+                                <td class="text-center">
+                                    @Html.DisplayFor(modelItem => item.FullName)
+                                </td>
+                                <td class="text-center">
+                                    @Html.DisplayFor(modelItem => item.DeedDate)
+                                </td>
+                                <td class="text-center">
+                                    @Html.DisplayFor(modelItem => item.Location)<br />
+                                    @Html.DisplayFor(modelItem => item.Lat) , @Html.DisplayFor(modelItem => item.Lon)
+                                </td>
+                                @*<td class="text-center">
+                                    @Html.DisplayFor(modelItem => item.Lat)
+                                </td>*@
+                                @*<td class="text-center">
+                                    @Html.DisplayFor(modelItem => item.Lon)
+                                </td>*@
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.ChallengeName)
+                                </td>
+                                <td class="text-center">
+                                    <a href="/User?type=DEED&id=@item.DeedId">@Html.DisplayFor(modelItem => item.TagUserFullName)</a>
+                                </td>
+                                <td class="text-center">
+                                    @Html.DisplayFor(modelItem => item.Rating)
+                                </td>
+                                <td>
+                                    <span data-toggle="tooltip" data-placement="top" title="@item.Comment">@TextHelper.ShortString(item.Comment, 8)</span>
+</td>
+                                <td class="text-center">
+                                    @Html.DisplayFor(modelItem => item.DueDate)
+                                </td>
+                                <td class="text-center">
+                                    @Html.DisplayFor(modelItem => item.CreateDate)
+                                </td>
+                               
+                                @*<td class="text-center">
+                                    @{
+                                        if (item.IsValid)
+                                        {
+                                            <span class="glyphicon glyphicon-ok"></span>
+                                        }
+                                    }
+                                </td>*@
+                                <td class="text-center">
+                                    <a href="/Deed/Delete/@item.DeedId" id="lnkDelete" class="danger" data-toggle="tooltip" data-placement="top" title="Delete Deed">
+                                        <span class="fa-stack fa-lg">
+                                            <i class="fa fa-square fa-stack-2x"></i>
+                                            <i class="fa fa-trash-o fa-stack-1x fa-inverse"></i>
+                                        </span>
+                                    </a>
+                                </td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+            </div>
+        </div>
+        @{
+            pagerModel.LinkFormat = linkFormat.Replace("{search}", ViewBag.Search.ToString()).Replace("{orderBy}", ViewBag.OrderBy.ToString()).Replace("{isAsc}", ViewBag.IsAsc.ToString()).Replace("{challengeId}", ViewBag.ChallengeId.ToString()).Replace("{userId}", ViewBag.UserId.ToString());
+            System.Web.Mvc.Html.RenderPartialExtensions.RenderPartial(this.Html, "_ListPager", pagerModel);
+        }
+    </div>
+</div>
+
+@section scripts{
+    <script src="~/Scripts/bootbox.min.js"></script>
+    <script src="~/Scripts/Pages/goodapp.search.js"></script>
+    <script src="~/Scripts/Pages/goodapp.deed.js"></script>
+}

@@ -1,0 +1,76 @@
+<div class="with-bottom-button" ng-show="!loadingChallenge">
+    <div class="page-header">
+        <h3>{{title}}</h3>
+    </div>
+
+    <script type="text/ng-template" id="form-validation-messages">
+        <div ng-message="required">This field is required.</div>
+        <div ng-message="time">Please enter a valid time.</div>
+    </script>
+
+    <form name="form" novalidate ng-submit="submit()">
+
+        <div class="vertical-space">
+            <label>Tag Recipient (optional)</label>
+            <div class="input-group transparent-addon">
+                <span class="input-group-addon"><i class="fa fa-search"></i></span>
+
+                <ui-select id="recipient_selector" ng-model="selectedRecipient" theme="bootstrap" on-select="someFunction($item, $model)" reset-search-input="true">
+                    <ui-select-match placeholder="Search for user">{{$select.selected.name}}</ui-select-match>
+                    <ui-select-choices repeat="recipient in recipients" reset-search-input="true" refresh="refreshRecipients($select.search)" refresh-delay="1000">
+                        <div class="photo photo-xs" style="background-image: url({{recipient.photoPath}})"></div>
+                        <div ng-bind-html="recipient.name | highlight: $select.search"></div>
+                    </ui-select-choices>
+                </ui-select>
+
+            </div>
+            <section id="recipients">
+                <div class="recipient" ng-class="{fading:!showStranger}">
+                    <span class="photo" style="background-image:url(images/icon_stranger.jpg)"></span>
+                    <span class="name">Stranger</span>
+                </div>
+                <div class="recipient" ng-class="{fading:!recipient.selected}" ng-click="selectRecipient(recipient)" ng-repeat="recipient in selectedRecipients">
+                    <span class="photo" style="background-image: url({{recipient.photoPath}})"></span>
+                    <span class="name">{{recipient.name}}</span>
+                </div>
+            </section>
+        </div>
+
+        <div class="form-group">
+            <label for="time"><span class="glyphicon glyphicon-time"></span> Time of deed</label>
+            <input type="time" placeholder="HH:mm:ss" class="form-control" name="time" ng-model="time" required/>
+            <div ng-show="form.$submitted||form.time.$touched" class="validation-error" ng-messages="form.time.$error" ng-messages-include="form-validation-messages"></div>
+        </div>
+        <div class="form-group">
+            <label for="location"><span class="glyphicon glyphicon-map-marker"></span> Location of deed</label>
+            <input type="text" required class="form-control powerby-google" name="location" ng-model="location"/>
+            <div ng-show="form.$submitted||form.location.$touched" class="validation-error" ng-messages="form.location.$error" ng-messages-include="form-validation-messages"></div>
+        </div>
+        <!-- <div class="form-group">
+            <label for="location">Rate this challenge</label>
+            <div>
+                <rating class="txt-large-xxxx" max="5" min="1" ng-model="rating"/>
+                <div class="clearfix"></div>
+            </div>
+        </div> -->
+
+        <div class="form-group">
+            <label for="location">Caption</label>
+            <textarea type="text" class="form-control" name="comment" ng-model="comment"></textarea>
+        </div>
+
+        <div class="alert alert-danger" ng-show="errorMessage">
+            {{errorMessage}}
+        </div>
+        <p>
+            <button type="submit" class="bottom-button" ng-disabled="submittingNewDeed">
+                <i class="fa fa-circle-o-notch fa-spin" ng-show="submittingNewDeed"></i>
+                <span ng-show="!submittingNewDeed">COMPLETE!</span>
+            </button>
+        </p>
+    </form>
+</div>
+<div ng-show="loadingChallenge" class="txt-align-center loading-screen">
+    <i class="fa fa-circle-o-notch fa-spin fa-3x vertical-center"></i>
+</div>
+<div id="mapPlaceHolder"></div>

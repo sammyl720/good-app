@@ -1,0 +1,37 @@
+.flex {
+    display: flex;
+}
+
+    .flex.flex-vertical {
+        -ms-flex-direction: column;
+        flex-direction: column;
+    }
+
+    .flex.flex-horizontal {
+        -ms-flex-direction: row;
+        flex-direction: row;
+    }
+
+    .flex.center-justified {
+        align-items: center;
+    }
+
+    .flex.content-space-around {
+        justify-content: space-around;
+    }
+
+.weight-1 {
+    flex-grow: 1;
+}
+
+.weight-2 {
+    flex-grow: 2;
+}
+
+.weight-3 {
+    flex-grow: 3;
+}
+
+.weight-4 {
+    flex-grow: 4;
+}

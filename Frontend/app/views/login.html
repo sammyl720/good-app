@@ -1,0 +1,36 @@
+<div class="page-header">
+    <h3>Login</h3>
+</div>
+
+<script type="text/ng-template" id="form-validation-messages">
+    <div ng-message="required">This field is required.</div>
+    <div ng-message="minlength">This field is too short.</div>
+    <div ng-message="email">Please enter an email address.</div>
+</script>
+
+<form name="form" novalidate ng-submit="submit()">
+    <div class="form-group">
+        <label for="email">Email</label>
+        <input type="email" name="email" class="form-control" ng-model="email" required />
+        <div ng-show="form.$submitted||form.email.$touched" class="validation-error" ng-messages="form.email.$error" ng-messages-include="form-validation-messages"></div>
+    </div>
+
+    <div class="form-group">
+        <label for="password">Password</label>
+        <input type="password" name="password" class="form-control" ng-model="password" required />
+        <div ng-show="form.$submitted||form.password.$touched" class="validation-error" ng-messages="form.password.$error" ng-messages-include="form-validation-messages"></div>
+    </div>
+
+    <div class="checkbox">
+        <label>
+            <input type="checkbox" ng-model="rememberMe" /> Remember Me
+        </label>
+    </div>
+    <div class="alert alert-danger" ng-show="loginError">
+        <p>{{loginError}}</p>
+    </div>
+    <p>
+        <button type="submit" class="btn btn-primary btn-lg" ng-disabled="submitting"><i class="fa fa-circle-o-notch fa-spin" ng-show="submitting"></i><span ng-show="!submitting">Submit</span></button>
+        <a href="#/register" class="btn btn-default btn-lg">Register</a>
+    </p>
+</form>

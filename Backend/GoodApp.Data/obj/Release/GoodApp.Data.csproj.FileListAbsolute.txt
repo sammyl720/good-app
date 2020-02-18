@@ -1,0 +1,16 @@
+C:\Users\Yu\Projects\goodapp\poc\Backend\GoodApp.Data\bin\Release\GoodApp.Data.dll.config
+C:\Users\Yu\Projects\goodapp\poc\Backend\GoodApp.Data\bin\Release\GoodApp.Data.dll
+C:\Users\Yu\Projects\goodapp\poc\Backend\GoodApp.Data\bin\Release\GoodApp.Data.pdb
+C:\Users\Yu\Projects\goodapp\poc\Backend\GoodApp.Data\bin\Release\EntityFramework.dll
+C:\Users\Yu\Projects\goodapp\poc\Backend\GoodApp.Data\bin\Release\EntityFramework.SqlServer.dll
+C:\Users\Yu\Projects\goodapp\poc\Backend\GoodApp.Data\bin\Release\Microsoft.AspNet.Identity.Core.dll
+C:\Users\Yu\Projects\goodapp\poc\Backend\GoodApp.Data\bin\Release\Microsoft.AspNet.Identity.EntityFramework.dll
+C:\Users\Yu\Projects\goodapp\poc\Backend\GoodApp.Data\bin\Release\EntityFramework.xml
+C:\Users\Yu\Projects\goodapp\poc\Backend\GoodApp.Data\bin\Release\EntityFramework.SqlServer.xml
+C:\Users\Yu\Projects\goodapp\poc\Backend\GoodApp.Data\bin\Release\Microsoft.AspNet.Identity.Core.xml
+C:\Users\Yu\Projects\goodapp\poc\Backend\GoodApp.Data\bin\Release\Microsoft.AspNet.Identity.EntityFramework.xml
+C:\Users\Yu\Projects\goodapp\poc\Backend\GoodApp.Data\obj\Release\GoodApp.Data.csprojResolveAssemblyReference.cache
+C:\Users\Yu\Projects\goodapp\poc\Backend\GoodApp.Data\obj\Release\GoodApp.Data.Migrations.AddComments.resources
+C:\Users\Yu\Projects\goodapp\poc\Backend\GoodApp.Data\obj\Release\GoodApp.Data.csproj.GenerateResource.Cache
+C:\Users\Yu\Projects\goodapp\poc\Backend\GoodApp.Data\obj\Release\GoodApp.Data.dll
+C:\Users\Yu\Projects\goodapp\poc\Backend\GoodApp.Data\obj\Release\GoodApp.Data.pdb

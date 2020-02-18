@@ -1,0 +1,1 @@
+alter table Groups add Picture nvarchar(max)

@@ -1,0 +1,27 @@
+<script type="text/ng-template" id="form-validation-messages">
+    <div ng-message="required">This field is required.</div>
+    <div ng-message="minlength">This field is too short.</div>
+    <div ng-message="email">Please enter an email address.</div>
+</script>
+
+<div class="page-header">
+    <h3>Join Group</h3>
+</div>
+
+
+<form name="form" novalidate ng-submit="submit()">
+    <div class="form-group">
+        <label for="code">Code</label>
+        <input type="text" name="code" class="form-control" ng-model="code" required />
+        <div ng-show="form.$submitted||form.code.$touched" class="validation-error" ng-messages="form.code.$error" ng-messages-include="form-validation-messages"></div>
+    </div>
+    <div class="alert alert-danger" ng-show="errorMessage">
+        {{errorMessage}}
+    </div>
+    <p>
+        <button type="submit" class="btn btn-primary btn-lg" ng-disabled="submitting">
+            <i class="fa fa-circle-o-notch fa-spin" ng-show="submitting"></i>
+            <span ng-show="!submitting">Submit</span>
+        </button>
+    </p>
+</form>

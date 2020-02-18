@@ -1,0 +1,86 @@
+﻿@model GoodApp.Backend.Models.PagerModel
+
+<div class="row">
+    <div class="col-md-5 text-left">
+        <div class="btn-group">
+            <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown">
+                @Model.PageSize <span class="caret"></span>
+            </button>
+            <ul class="dropdown-menu text-left" role="menu">
+                @if (Model.PageSize != 10)
+                {
+                    <li><a href="@Model.LinkFormat.Replace("{pageIndex}",Model.PageIndex.ToString()).Replace("{pageSize}","10")">10</a></li>
+                }
+                @if (Model.PageSize != 15)
+                {
+                    <li><a href="@Model.LinkFormat.Replace("{pageIndex}", Model.PageIndex.ToString()).Replace("{pageSize}", "15")">15</a></li>
+                }
+                @if (Model.PageSize != 20)
+                {
+                    <li><a href="@Model.LinkFormat.Replace("{pageIndex}", Model.PageIndex.ToString()).Replace("{pageSize}", "20")">20</a></li>
+                }
+                @if (Model.PageSize != 50)
+                {
+                    <li><a href="@Model.LinkFormat.Replace("{pageIndex}", Model.PageIndex.ToString()).Replace("{pageSize}", "50")">50</a></li>
+                }
+                @if (Model.PageSize != 100)
+                {
+                    <li><a href="@Model.LinkFormat.Replace("{pageIndex}", Model.PageIndex.ToString()).Replace("{pageSize}", "100")">100</a></li>
+                }
+            </ul>
+        </div>
+        <span>Showing @Model.StartItem to @Model.EndItem of @Model.ItemCount entries</span>
+    </div>
+    <div class="col-md-7 text-right">
+        <ul class="pagination">
+            @{
+                var startIndex = 1;
+                var curIndex = Model.PageIndex;
+                if (curIndex >= 5)
+                {
+                    if (curIndex % 5 == 0)
+                    {
+                        startIndex = curIndex - 2;
+                    }
+                    else
+                    {
+                        startIndex = curIndex - (curIndex % 5);
+                    }
+                }
+                var endIndex = startIndex + 4;
+                endIndex = Math.Min(endIndex, Model.PageCount);
+            }
+            @if (startIndex == 1)
+            {
+                <li class="disabled"><span><<</span></li>
+                <li class="disabled"><span><</span></li>
+            }
+            else
+            {
+                <li><span><a href="@Model.LinkFormat.Replace("{pageIndex}", "1").Replace("{pageSize}", Model.PageSize.ToString())"><<</a></span></li>
+                <li><span><a href="@Model.LinkFormat.Replace("{pageIndex}", (curIndex==1?1:curIndex-1).ToString()).Replace("{pageSize}", Model.PageSize.ToString())"><</a></span></li>
+            }
+            @for (var index = startIndex; index <= endIndex; index++)
+            {
+                if (index == curIndex)
+                {
+                    <li class="active"><span>@index <span class="sr-only">(current)</span></span></li>
+                }
+                else
+                {
+                    <li><span><a href="@Model.LinkFormat.Replace("{pageIndex}", index.ToString()).Replace("{pageSize}", Model.PageSize.ToString())">@index</a></span></li>
+                }
+            }
+            @if (endIndex == Model.PageCount)
+            {
+                <li class="disabled"><span>></span></li>
+                <li class="disabled"><span>>></span></li>
+            }
+            else
+            {
+                <li><span><a href="@Model.LinkFormat.Replace("{pageIndex}", (curIndex==Model.PageCount?Model.PageCount:curIndex+1).ToString()).Replace("{pageSize}", Model.PageSize.ToString())">></a></span></li>
+                <li><span><a href="@Model.LinkFormat.Replace("{pageIndex}", Model.PageCount.ToString()).Replace("{pageSize}", Model.PageSize.ToString())">>></a></span></li>
+            }
+        </ul>
+    </div>
+</div>

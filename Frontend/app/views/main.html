@@ -1,0 +1,35 @@
+<div ng-show="!loadingChallenges">
+    <section class="notification-bar row">
+        <div class="col-xs-12">
+            <span class="title">Total deeds</span>
+            <span>{{deedCounts.totalDeedCount}}</span>
+        </div>
+    </section>
+    <div class="space-around flex flex-horizontal center-justified">
+        <section>
+            <div class="photo photo-lg" style="background-image: url({{photoPath}})"></div>
+        </section>
+        <div class="weight-3">
+            <span class="txt-large light">{{name}}</span>
+            <div class="flex flex-horizontal">
+                <section class="right-divider right-padding">
+                    <div class="txt-large">{{deedCounts.networkDeedCount}}</div>
+                    <label class="light">Network Deeds</label>
+                </section>
+                <section class="left-padding">
+                    <div class="txt-large light">{{deedCounts.myTotalDeedCount}}</div>
+                    <label class="light">My Total Deeds</label>
+                </section>
+            </div>
+        </div>
+    </div>
+    <label class="vertical-space txt-large">{{challenges.length}} Challenges Today</label>
+    <div class="challenge-list">
+        <challenge-progress-list-item class="challenge-item" ng-repeat="challenge in challenges" picture="challenge.picture" name="challenge.name" take-action="true" completed-count="challenge.completedCount" count="challenge.count" challenge-id="challenge.challengeId" due-date="challenge.dueDate"></challenge-progress-list-item>
+    </div>
+</div>
+
+
+<div ng-show="loadingChallenges" class="txt-align-center loading-screen">
+    <i class="fa fa-circle-o-notch fa-spin fa-3x vertical-center"></i>
+</div>

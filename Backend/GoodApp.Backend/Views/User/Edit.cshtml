@@ -1,0 +1,108 @@
+﻿@using GoodApp.Data
+@using GoodApp.Data.Models
+@model GoodApp.Backend.Models.EditUserMvcViewModel
+@{
+    ViewBag.Title = "Users - Edit";
+    Layout = "~/Views/Shared/SBAdminV2Layout.cshtml";
+}
+
+<div class="row">
+    <div class="col-lg-12">
+        <h3 class="page-header nomargin">@ViewBag.Title</h3>
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-lg-6">
+        <div class="text-left">
+            @using (Html.BeginForm("Edit", "User", new { returnUrl = ViewBag.ReturnUrl }, FormMethod.Post, new { enctype = "multipart/form-data" }))
+            {
+                @Html.AntiForgeryToken()
+
+                <div class="form-horizontal">
+                    @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+                    <div class="form-group">
+                        @Html.LabelFor(model => model.UserName, htmlAttributes: new { @class = "control-label col-md-2" })
+                        <div class="col-md-10">
+                            @Html.HiddenFor(model => model.UserId)
+                            @Html.HiddenFor(model => model.UserName)
+                            <label class="control-label">@Model.UserName</label>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        @Html.LabelFor(model => model.FirstName, htmlAttributes: new { @class = "control-label col-md-2" })
+                        <div class="col-md-10">
+                            @Html.EditorFor(model => model.FirstName, new { htmlAttributes = new { @class = "form-control" } })
+                            @Html.ValidationMessageFor(model => model.FirstName, "", new { @class = "text-danger" })
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        @Html.LabelFor(model => model.LastName, htmlAttributes: new { @class = "control-label col-md-2" })
+                        <div class="col-md-10">
+                            @Html.EditorFor(model => model.LastName, new { htmlAttributes = new { @class = "form-control" } })
+                            @Html.ValidationMessageFor(model => model.LastName, "", new { @class = "text-danger" })
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        @Html.LabelFor(model => model.RoleName, htmlAttributes: new { @class = "control-label col-md-2" })
+                        <div class="col-md-10">
+                            @Html.EnumDropDownListFor(p => p.RoleName, new { @class = "form-control" })
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        @Html.LabelFor(model => model.Status, htmlAttributes: new { @class = "control-label col-md-2" })
+                        <div class="col-md-10">
+                            @Html.EnumDropDownListFor(p => p.Status, new { @class = "form-control" })
+                        </div>
+                    </div>
+                    @{
+                var groups = ViewBag.Groups as List<Group>;
+                if (groups != null)
+                {
+                    var groupSelects = groups.Select(p => new SelectListItem()
+                    {
+                        Text = p.Code + " / Name: " + p.Name,
+                        Value = p.GroupId.ToString(),
+                        Selected =Model.GroupIds != null && Model.GroupIds.Any(p.GroupId.ToString().Equals)
+                    });
+                    <div class="form-group">
+                        @Html.LabelFor(model => model.GroupIds, htmlAttributes: new { @class = "control-label col-md-2" })
+                        <div class="col-md-10">
+                            @Html.DropDownList("GroupIds", groupSelects, new
+                       {
+                           @class = "form-control",
+                           @multiple = "multiple",
+                           @data_multi = "multiselect",
+                           @data_multivals =
+                               Model.GroupIds==null?string.Empty:string.Join(",", Model.GroupIds)
+                       })
+                        </div>
+                    </div>
+                }
+                    }
+                    <div class="form-group">
+                        @Html.LabelFor(model => model.Photo, htmlAttributes: new { @class = "control-label col-md-2" })
+                        <div class="col-md-8">
+                            <input type="file" name="Photo" class="form-control" />
+                            @Html.ValidationMessageFor(model => model.Photo, "", new { @class = "text-danger" })
+                        </div>
+                        <div class="col-md-2 user-list">
+                            <div class="user-photo" style="background-image: url('@(string.IsNullOrEmpty(Model.PhotoPath)? "/Images/empty.jpg":Model.PhotoPath)')"></div>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <div class="col-md-offset-2 col-md-10">
+                            <div class="col-md-2">
+                                <input type="submit" value="Submit" class="btn btn-primary" />
+                            </div>
+                            <div class="col-md-2">
+                                <a href="@ViewBag.ReturnUrl" class="btn btn-primary">Back to List</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            }
+        </div>
+    </div>
+</div>

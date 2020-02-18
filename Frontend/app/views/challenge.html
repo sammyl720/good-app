@@ -1,0 +1,54 @@
+<div ng-show="!loadingComments" class="with-bottom-actionbar">
+
+    <h3>{{challenge.name}}</h3>
+
+    <p class="light top-space">
+        {{challenge.description}}
+    </p>
+
+    <div class="row vertical-space">
+        <div class="col-xs-4 right-divider">
+            <div class="txt-large bold">{{challenge.completedCount}}</div>
+            <label class="txt-small light">DONE</label>
+        </div>
+        <div class="col-xs-4 right-divider">
+            <div class="txt-large bold">{{challenge.incompletedCount}}</div>
+            <label class="txt-small light">TO GO</label>
+        </div>
+        <div class="col-xs-4">
+            <div class="txt-large bold">{{getRemainTime()}}</div>
+            <label class="txt-small light">LEFT</label>
+        </div>
+    </div>
+
+    <!-- <label class="txt-large">Rating</label>
+    <p>
+        <rating class="txt-large-xxxx vertical-space primary" ng-model="rating" max="5" min="1" readonly="true"></rating>
+    </p> -->
+
+    <label class="txt-large">Caption</label>
+
+    <ul class="media-list">
+        <li class="media" ng-repeat="comment in comments">
+            <div class="media-left">
+                <div class="photo" style="background-image: url({{comment.userPhotoPath}})"></div>
+            </div>
+            <div class="media-body">
+                <label class="light name">{{comment.userName}}</label>
+                <p class="txt-large">{{comment.caption}}</p>
+            </div>
+        </li>
+    </ul>
+</div>
+
+<div class="bottom-actionbar flex flex-horizontal">
+    <input type="text" class="form-control weight-1" placeholder="Add Caption" ng-model="caption" />
+    <button class="btn btn-primary" ng-click="addNewCaption()" ng-disabled="submittingCaption">
+        <i class="fa fa-circle-o-notch fa-spin" ng-show="submittingCaption"></i>
+        <span ng-show="!submittingCaption">Submit</span>
+    </button>
+</div>
+
+<div ng-show="loadingComments" class="txt-align-center loading-screen">
+    <i class="fa fa-circle-o-notch fa-spin fa-3x vertical-center"></i>
+</div>

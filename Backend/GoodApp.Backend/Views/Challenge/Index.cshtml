@@ -1,0 +1,271 @@
+﻿@using System.Web.UI.WebControls
+@using GoodApp.Backend.Helpers
+@using GoodApp.Data
+@model IEnumerable<GoodApp.Data.Views.ChallengeView>
+
+@{
+    ViewBag.Title = "Challenges";
+    Layout = "~/Views/Shared/SBAdminV2Layout.cshtml";
+    var linkFormat = ViewBag.PreLink + "&pageIndex={pageIndex}&pageSize={pageSize}&status={status}&search={search}&orderBy={orderBy}&isAsc={isAsc}&code={code}";
+}
+
+<div class="row">
+    <div class="col-lg-12">
+        <h3 class="page-header nomargin">
+            @{
+                if (string.IsNullOrEmpty(ViewBag.SubTitle))
+                {
+                    <a href="/Challenge">@ViewBag.Title</a>
+                }
+                else
+                {
+                    @Html.Raw(ViewBag.SubTitle)
+                }
+            }
+        </h3>
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-lg-12">
+
+        <div class="row">
+            <div class="col-md-6">
+                <p>
+                    <a href="/Challenge/Create" class="btn btn-primary">
+                        <i class="fa fa-plus-circle fa-lg"></i> Add Challenge
+                    </a>
+                </p>
+            </div>
+            <div class="col-md-6">
+                <p class=" pull-right">
+                    <div class="input-group">
+                        <div class="input-group-btn @(ViewBag.Type=="CODE"?"hidden":"")">
+                            <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown"> @(ViewBag.DisplayCode.ToString()) <span class="caret"></span></button>
+                            <ul class="dropdown-menu">
+                                @{
+                                    var codeFormat = linkFormat.Replace("{search}", ViewBag.Search.ToString()).Replace("{orderBy}", ViewBag.OrderBy.ToString()).Replace("{isAsc}", ViewBag.IsAsc.ToString()).Replace("{pageIndex}", "1").Replace("{pageSize}", ViewBag.PageSize.ToString()).Replace("{status}", ViewBag.Status.ToString());
+                                    <li role="presentation"><a role="menuitem" tabindex="-1" href="@(codeFormat.Replace("{code}","All"))">All Group Codes</a></li>
+                                    <li role="presentation" class="divider"></li>
+                                    foreach (var group in ViewBag.Groups)
+                                    {
+                                        <li role="presentation"><a role="menuitem" tabindex="-1" href="@(codeFormat.Replace("{code}",group.Code))">@group.Code</a></li>
+                                    }
+                                }
+                            </ul>
+                        </div>
+                        <div class="input-group-btn">
+                            <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown"> @ViewBag.DisplayStatus.ToString() <span class="caret"></span></button>
+                            <ul class="dropdown-menu">
+                                @{
+                                    var statusFormat = linkFormat.Replace("{search}", ViewBag.Search.ToString()).Replace("{orderBy}", ViewBag.OrderBy.ToString()).Replace("{isAsc}", ViewBag.IsAsc.ToString()).Replace("{pageIndex}", "1").Replace("{pageSize}", ViewBag.PageSize.ToString()).Replace("{code}", ViewBag.Code.ToString());
+                                    <li role="presentation"><a role="menuitem" tabindex="-1" href="@(statusFormat.Replace("{status}","All"))">All Statuses</a></li>
+                                    <li role="presentation" class="divider"></li>
+                                    foreach (var status in Enum.GetNames(typeof(Enums.ChallengeStatus)))
+                                    {
+                                        <li role="presentation"><a role="menuitem" tabindex="-1" href="@(statusFormat.Replace("{status}",status))">@status</a></li>
+                                    }
+                                }
+                            </ul>
+                        </div>
+                        <input type="text" id="txtSearch" class="form-control" value="@ViewBag.Search.ToString()" placeholder="Search by email or name">
+                        <span class="input-group-btn">
+                            @{
+                                var searchFormat = linkFormat.Replace("{status}", ViewBag.Status.ToString()).Replace("{orderBy}", ViewBag.OrderBy.ToString()).Replace("{isAsc}", ViewBag.IsAsc.ToString()).Replace("{pageIndex}", "1").Replace("{pageSize}", ViewBag.PageSize.ToString()).Replace("{code}", ViewBag.Code.ToString());
+                                <input type="hidden" id="hidSearchUrl" value="@searchFormat" />
+                            }
+                            <button class="btn btn-primary" id="btnSearch" type="button">
+                                <i class="fa fa-search-plus fa-lg"></i>
+                            </button>
+                        </span>
+                    </div><!-- /input-group -->
+                </p>
+            </div>
+        </div>
+        <div class="table-responsive">
+            <div class="form-inline" role="grid">
+                <table class="table table-striped table-bordered table-hover user-list">
+                    <thead>
+                        <tr>
+                            @{
+                                var headFormat = linkFormat.Replace("{search}", ViewBag.Search.ToString()).Replace("{status}", ViewBag.Status.ToString()).Replace("{isAsc}", (!ViewBag.IsAsc).ToString()).Replace("{pageIndex}", ViewBag.PageIndex.ToString()).Replace("{pageSize}", ViewBag.PageSize.ToString()).Replace("{code}", ViewBag.Code.ToString());
+                                var pagerModel = new GoodApp.Backend.Models.PagerModel()
+                                    {
+                                        PageIndex = ViewBag.PageIndex,
+                                        PageSize = ViewBag.PageSize,
+                                        ItemCount = ViewBag.ItemCount
+                                    };
+                                var rowIndex = 0; //pagerModel.StartItem;
+                                if (ViewBag.OrderBy == "Order" && !ViewBag.IsAsc)
+                                {
+                                    rowIndex = -(Model.Count() + 1);
+                                }
+                            }
+                            <th class="text-center fixed-width-50">
+                                <a href="@(headFormat.Replace("{orderBy}", "Order"))" data-toggle="tooltip" data-placement="top" title="Only when ordered by index, arrange is allowed.">#</a>
+                                <span class="glyphicon glyphicon-arrow-@(ViewBag.IsAsc?"up":"down") @(ViewBag.OrderBy=="Order"?"":"hidden")"></span>
+                                <input id="orderBy" value="@ViewBag.OrderBy" type="hidden" />
+                                <input id="isAsc" value="@(ViewBag.IsAsc)" type="hidden" />
+                            </th>
+                            <th>
+                                <a href="@(headFormat.Replace("{orderBy}", "Name"))">@Html.DisplayNameFor(model => model.Name)</a>
+                                <span class="glyphicon glyphicon-arrow-@(ViewBag.IsAsc?"up":"down") @(ViewBag.OrderBy=="Name"?"":"hidden")"></span>
+                            </th>
+                            @*<th class="text-center">
+                                    <a href="@(headFormat.Replace("{orderBy}", "Order"))">@Html.DisplayNameFor(model => model.Order)</a>
+                                    <span class="glyphicon glyphicon-arrow-@(ViewBag.IsAsc?"up":"down") @(ViewBag.OrderBy=="Order"?"":"hidden")"></span>
+                                </th>*@
+                            <th class="text-center">
+                                <a href="@(headFormat.Replace("{orderBy}", "Type"))">@Html.DisplayNameFor(model => model.Type)</a>
+                                <span class="glyphicon glyphicon-arrow-@(ViewBag.IsAsc?"up":"down") @(ViewBag.OrderBy == "Type" ? "" : "hidden")"></span>
+                            </th>
+                            <th class="text-center">
+                                <a href="@(headFormat.Replace("{orderBy}", "Count"))">@Html.DisplayNameFor(model => model.Count)</a>
+                                <span class="glyphicon glyphicon-arrow-@(ViewBag.IsAsc?"up":"down") @(ViewBag.OrderBy == "Count" ? "" : "hidden")"></span>
+                            </th>
+                            @*<th class="text-center">
+                                    <a href="@(headFormat.Replace("{orderBy}", "FrequencyCount"))">@Html.DisplayNameFor(model => model.FrequencyCount)</a>
+                                    <span class="glyphicon glyphicon-arrow-@(ViewBag.IsAsc?"up":"down") @(ViewBag.OrderBy == "FrequencyCount" ? "" : "hidden")"></span>
+                                </th>
+                                <th class="text-center">
+                                    <a href="@(headFormat.Replace("{orderBy}", "FrequencyValue"))">@Html.DisplayNameFor(model => model.FrequencyValue)</a>
+                                    <span class="glyphicon glyphicon-arrow-@(ViewBag.IsAsc?"up":"down") @(ViewBag.OrderBy == "FrequencyValue" ? "" : "hidden")"></span>
+                                </th>
+                                <th class="text-center">
+                                    <a href="@(headFormat.Replace("{orderBy}", "FrequencyType"))">@Html.DisplayNameFor(model => model.FrequencyType)</a>
+                                    <span class="glyphicon glyphicon-arrow-@(ViewBag.IsAsc?"up":"down") @(ViewBag.OrderBy == "FrequencyType" ? "" : "hidden")"></span>
+                                </th>*@
+
+                            @*<th class="text-center">
+                                    Frequency
+                                </th>*@
+                            <th class="text-center">
+                                <a href="@(headFormat.Replace("{orderBy}", "DueDate"))">@Html.DisplayNameFor(model => model.DueDate)</a>
+                                <span class="glyphicon glyphicon-arrow-@(ViewBag.IsAsc?"up":"down") @(ViewBag.OrderBy=="DueDate"?"":"hidden")"></span>
+                            </th>
+                            <th class="text-center">
+                                <a href="@(headFormat.Replace("{orderBy}", "Status"))">@Html.DisplayNameFor(model => model.Status)</a>
+                                <span class="glyphicon glyphicon-arrow-@(ViewBag.IsAsc?"up":"down") @(ViewBag.OrderBy == "Status" ? "" : "hidden")"></span>
+                            </th>
+                            <th>
+                                @Html.DisplayNameFor(model => model.Description)
+                            </th>
+                            <th class="text-center">
+                                <a href="@(headFormat.Replace("{orderBy}","CreatorFirstName"))">Creator</a>
+                                <span class="glyphicon glyphicon-arrow-@(ViewBag.IsAsc?"up":"down") @(ViewBag.OrderBy=="CreatorFirstName"?"":"hidden")"></span>
+                            </th>
+                            <th class="text-center">
+                                <a href="@(headFormat.Replace("{orderBy}", "CreateDate"))">@Html.DisplayNameFor(model => model.CreateDate)</a>
+                                <span class="glyphicon glyphicon-arrow-@(ViewBag.IsAsc?"up":"down") @(ViewBag.OrderBy=="CreateDate"?"":"hidden")"></span>
+                            </th>
+                            <th class="text-center">
+                                <a href="@(headFormat.Replace("{orderBy}", "ChallengeGroupCount"))">@Html.DisplayNameFor(model => model.ChallengeGroupCount)</a>
+                                <span class="glyphicon glyphicon-arrow-@(ViewBag.IsAsc?"up":"down") @(ViewBag.OrderBy == "ChallengeGroupCount" ? "" : "hidden")"></span>
+                            </th>
+                            <th class="text-center">
+                                <a href="@(headFormat.Replace("{orderBy}", "DeedCount"))">@Html.DisplayNameFor(model => model.DeedCount)</a>
+                                <span class="glyphicon glyphicon-arrow-@(ViewBag.IsAsc?"up":"down") @(ViewBag.OrderBy == "DeedCount" ? "" : "hidden")"></span>
+                            </th>
+                            @*<th class="text-center">
+                                    <a href="@(headFormat.Replace("{orderBy}", "ValidDeedCount"))">@Html.DisplayNameFor(model => model.ValidDeedCount)</a>
+                                    <span class="glyphicon glyphicon-arrow-@(ViewBag.IsAsc?"up":"down") @(ViewBag.OrderBy == "ValidDeedCount" ? "" : "hidden")"></span>
+                                </th>*@
+                            <th class="text-center">
+                                <a href="@(headFormat.Replace("{orderBy}", "ChallengeUserCount"))">@Html.DisplayNameFor(model => model.ChallengeUserCount)</a>
+                                <span class="glyphicon glyphicon-arrow-@(ViewBag.IsAsc?"up":"down") @(ViewBag.OrderBy == "ChallengeUserCount" ? "" : "hidden")"></span>
+                            </th>
+                            <th class="fixed-width-90"></th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (var item in Model)
+                        {
+                            <tr id="@item.ChallengeId" data-id="@(Math.Abs(++rowIndex))">
+                                <td class="text-center">
+                                    <span class="badge">@(Math.Abs(rowIndex))</span>
+                                </td>
+                                <td>
+                                    <img class="group-picture" src="@item.Picture" />
+                                    @Html.DisplayFor(modelItem => item.Name)
+                                </td>
+                                @*<td class="text-center">
+                                        <span class="badge bg-info"> @Html.DisplayFor(modelItem => item.Order)</span>
+                                    </td>*@
+                                <td class="text-center">
+                                    @Html.DisplayFor(modelItem => item.Type)
+                                </td>
+                                <td class="text-center">
+                                    @Html.DisplayFor(modelItem => item.Count)
+                                </td>
+                                @*<td class="text-center">
+                                        @Html.DisplayFor(modelItem => item.FrequencyCount)
+                                    </td>
+                                    <td class="text-center">
+                                        @Html.DisplayFor(modelItem => item.FrequencyValue)
+                                    </td>
+                                    <td class="text-center">
+                                        @Html.DisplayFor(modelItem => item.FrequencyType)
+                                    </td>*@
+                                @*<td class="text-center">
+                                        @(item.FrequencyCount + " / " + item.FrequencyType + "(" + item.FrequencyValue + ")")
+                                    </td>*@
+                                <td class="text-center">
+                                    @Html.DisplayFor(modelItem => item.DueDate)
+                                </td>
+                                <td class="text-center">
+                                    <span class="label label-@(CSSHelper.GetChallengeStatusCss(item.Status))">@Html.DisplayFor(modelItem => item.Status)</span>
+                                </td>
+                                <td>
+                                    <span data-toggle="tooltip" data-placement="top" title="@item.Description">@TextHelper.ShortString(item.Description, 8)</span>
+                                </td>
+                                <td class="text-center">
+                                    @Html.DisplayFor(modelItem => item.FullName)
+                                </td>
+                                <td class="text-center">
+                                    @Html.DisplayFor(modelItem => item.CreateDate)
+                                </td>
+                                <td class="text-center">
+                                    <a href="/Code/?type=CHALLENGE&id=@item.ChallengeId">@Html.DisplayFor(modelItem => item.ChallengeGroupCount)</a>
+                                </td>
+                                <td class="text-center">
+                                    <a href="/Deed/?type=CHALLENGE&subType=Personal&id=@item.ChallengeId">@Html.DisplayFor(modelItem => item.DeedCount)</a>
+                                </td>
+                                @*<td class="text-center">
+                                        <a href="/Deed/?type=CHALLENGE&subType=Valid&id=@item.ChallengeId">@Html.DisplayFor(modelItem => item.ValidDeedCount)</a>
+                                    </td>*@
+                                <td class="text-center">
+                                    <a href="/User?type=CHALLENGE&id=@item.ChallengeId">@Html.DisplayFor(modelItem => item.ChallengeUserCount)</a>
+                                </td>
+                                <td class="text-center">
+                                    <a href="/Challenge/Edit/@item.ChallengeId" data-toggle="tooltip" data-placement="top" title="Edit Challenge">
+                                        <span class="fa-stack fa-lg">
+                                            <i class="fa fa-square fa-stack-2x"></i>
+                                            <i class="fa fa-pencil fa-stack-1x fa-inverse"></i>
+                                        </span>
+                                    </a>
+                                    <a href="/Challenge/Delete/@item.ChallengeId" id="lnkDelete" class="danger" data-toggle="tooltip" data-placement="top" title="Delete Challenge">
+                                        <span class="fa-stack fa-lg">
+                                            <i class="fa fa-square fa-stack-2x"></i>
+                                            <i class="fa fa-trash-o fa-stack-1x fa-inverse"></i>
+                                        </span>
+                                    </a>
+                                </td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+            </div>
+        </div>
+        @{
+            pagerModel.LinkFormat = linkFormat.Replace("{search}", ViewBag.Search.ToString()).Replace("{status}", ViewBag.Status.ToString()).Replace("{orderBy}", ViewBag.OrderBy.ToString()).Replace("{isAsc}", ViewBag.IsAsc.ToString()).Replace("{code}", ViewBag.Code.ToString());
+            System.Web.Mvc.Html.RenderPartialExtensions.RenderPartial(this.Html, "_ListPager", pagerModel);
+        }
+    </div>
+</div>
+
+@section scripts{
+    <script src="~/Scripts/bootbox.min.js"></script>
+    <script src="~/Scripts/Pages/goodapp.search.js"></script>
+    <script src="~/Scripts/jquery.tablednd.js"></script>
+    <script src="~/Scripts/Pages/goodapp.challenge.js"></script>
+}

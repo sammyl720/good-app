@@ -1,0 +1,13 @@
+C:\Users\Yu\Projects\goodapp\poc\Backend\TechwuliArsenal\bin\Release\TechwuliArsenal.dll
+C:\Users\Yu\Projects\goodapp\poc\Backend\TechwuliArsenal\bin\Release\TechwuliArsenal.pdb
+C:\Users\Yu\Projects\goodapp\poc\Backend\TechwuliArsenal\bin\Release\Newtonsoft.Json.dll
+C:\Users\Yu\Projects\goodapp\poc\Backend\TechwuliArsenal\bin\Release\System.Net.Http.Formatting.dll
+C:\Users\Yu\Projects\goodapp\poc\Backend\TechwuliArsenal\bin\Release\System.Web.Http.dll
+C:\Users\Yu\Projects\goodapp\poc\Backend\TechwuliArsenal\bin\Release\System.Web.Http.WebHost.dll
+C:\Users\Yu\Projects\goodapp\poc\Backend\TechwuliArsenal\bin\Release\Newtonsoft.Json.xml
+C:\Users\Yu\Projects\goodapp\poc\Backend\TechwuliArsenal\bin\Release\System.Net.Http.Formatting.xml
+C:\Users\Yu\Projects\goodapp\poc\Backend\TechwuliArsenal\bin\Release\System.Web.Http.xml
+C:\Users\Yu\Projects\goodapp\poc\Backend\TechwuliArsenal\bin\Release\System.Web.Http.WebHost.xml
+C:\Users\Yu\Projects\goodapp\poc\Backend\TechwuliArsenal\obj\Release\TechwuliArsenal.csprojResolveAssemblyReference.cache
+C:\Users\Yu\Projects\goodapp\poc\Backend\TechwuliArsenal\obj\Release\TechwuliArsenal.dll
+C:\Users\Yu\Projects\goodapp\poc\Backend\TechwuliArsenal\obj\Release\TechwuliArsenal.pdb

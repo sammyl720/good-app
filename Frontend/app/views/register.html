@@ -1,0 +1,67 @@
+<div class="page-header">
+    <h3>Register</h3>
+</div>
+
+<script type="text/ng-template" id="form-validation-messages">
+    <div ng-message="required">This field is required.</div>
+    <div ng-message="minlength">This field is too short.</div>
+    <div ng-message="email">Please enter an email address.</div>
+</script>
+
+<div class="alert alert-success" ng-show="registered">
+    <p class="vertical-space">Thanks. We will send you the invitation, stay tuned.</p>
+    <a class="btn btn-primary" href="#/login">Login</a>
+</div>
+
+<form ng-show="!registered" novalidate name="form" ng-submit="submit()">
+    <div class="form-group">
+        <label for="email">Email</label>
+        <input type="email" name="email" class="form-control" ng-model="email" required />
+        <div ng-show="form.$submitted||form.email.$touched" class="validation-error" ng-messages="form.email.$error" ng-messages-include="form-validation-messages"></div>
+    </div>
+
+    <div class="form-group">
+        <label for="password">Password</label>
+        <input type="password" name="password" class="form-control" ng-model="password" minlength="6" required />
+        <div ng-show="form.$submitted||form.password.$touched" class="validation-error" ng-messages="form.password.$error" ng-messages-include="form-validation-messages">
+            <div ng-message="minlength">The password must contains at least 6 characters.</div>
+        </div>
+    </div>
+
+    <div class="form-group">
+        <label for="confirmPassword">Confrim Password</label>
+        <input type="password" name="confirmPassword" class="form-control" ng-model="confirmPassword" equals-to="{{password}}" required />
+        <div ng-show="form.$submitted||form.confirmPassword.$touched" class="validation-error" ng-messages="form.confirmPassword.$error" ng-messages-include="form-validation-messages">
+            <div ng-message="equalsTo">Please confirm the password.</div>
+        </div>
+    </div>
+
+    <div class="form-group">
+        <label for="firstName">First Name</label>
+        <input name="firstName" class="form-control" ng-model="firstName" required />
+        <div ng-show="form.$submitted||form.firstName.$touched" class="validation-error" ng-messages="form.firstName.$error" ng-messages-include="form-validation-messages"></div>
+    </div>
+
+    <div class="form-group">
+        <label for="lastName">Last Name</label>
+        <input name="lastName" class="form-control" ng-model="lastName" required />
+        <div ng-show="form.$submitted||form.lastName.$touched" class="validation-error" ng-messages="form.lastName.$error" ng-messages-include="form-validation-messages"></div>
+    </div>
+
+    <div class="form-group">
+        <label for="photo">Profile Picture</label>
+        <input id="photo" name="photo" required type="file" ng-model="photo" valid-file class="form-control" accept="image/*" />
+        <div ng-show="form.$submitted||form.photo.$touched" class="validation-error" ng-messages="form.photo.$error" ng-messages-include="form-validation-messages"></div>
+    </div>
+
+    <div class="validation-error">
+    </div>
+    
+    <div class="alert alert-danger" role="alert" ng-show="registerError">
+        {{registerError}}
+    </div>
+
+    <p>
+        <button type="submit" class="btn btn-primary btn-lg" ng-disabled="submitting"><i class="fa fa-circle-o-notch fa-spin" ng-show="submitting"></i> <span ng-show="!submitting">Submit</span></button>
+    </p>
+</form>

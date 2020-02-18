@@ -1,0 +1,129 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 2013
+VisualStudioVersion = 12.0.31101.0
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GoodApp.Backend", "GoodApp.Backend\GoodApp.Backend.csproj", "{A04E21CD-0982-46FE-AB4C-0145129D7C03}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GoodApp.Data", "GoodApp.Data\GoodApp.Data.csproj", "{9B8F302E-DBF2-4F75-9AA6-0FF3008290A4}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TechwuliArsenal", "TechwuliArsenal\TechwuliArsenal.csproj", "{6491D7DA-2D1D-46DF-87FC-B3D95C6967AE}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Scripts", "Scripts", "{24C4C515-2D11-4A30-B44F-1498F4FBE0AE}"
+	ProjectSection(SolutionItems) = preProject
+		Scripts\20141226_AllChallengeViews.sql = Scripts\20141226_AllChallengeViews.sql
+		Scripts\20141226_AllDeedViews.sql = Scripts\20141226_AllDeedViews.sql
+		Scripts\20141226_AllGroupViews.sql = Scripts\20141226_AllGroupViews.sql
+		Scripts\20141226_AllUserViews.sql = Scripts\20141226_AllUserViews.sql
+		Scripts\20141230_SP_DeleteGroupById.sql = Scripts\20141230_SP_DeleteGroupById.sql
+		Scripts\20141230_SP_DeleteUserById.sql = Scripts\20141230_SP_DeleteUserById.sql
+		Scripts\20141231_SP_DeleteChallengeById.sql = Scripts\20141231_SP_DeleteChallengeById.sql
+		Scripts\20141231_SP_ReOrderChallenge.sql = Scripts\20141231_SP_ReOrderChallenge.sql
+		Scripts\20150115_AllGroupViews.sql = Scripts\20150115_AllGroupViews.sql
+		Scripts\20150115_Groups.sql = Scripts\20150115_Groups.sql
+	EndProjectSection
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = ".nuget", ".nuget", "{F97B732A-2FA5-478C-88EC-A050945490CC}"
+	ProjectSection(SolutionItems) = preProject
+		.nuget\NuGet.Config = .nuget\NuGet.Config
+		.nuget\NuGet.exe = .nuget\NuGet.exe
+		.nuget\NuGet.targets = .nuget\NuGet.targets
+	EndProjectSection
+EndProject
+Project("{00D1A9C2-B5F0-4AF3-8072-F6C62B433612}") = "GoodApp.Database", "GoodApp.Database\GoodApp.Database.sqlproj", "{70592709-6CDE-4761-A9FA-ECD95A4636F8}"
+EndProject
+Global
+	GlobalSection(TeamFoundationVersionControl) = preSolution
+		SccNumberOfProjects = 5
+		SccEnterpriseProvider = {4CA58AB2-18FA-4F8D-95D4-32DDF27D184C}
+		SccTeamFoundationServer = https://techwuli.visualstudio.com/defaultcollection
+		SccLocalPath0 = .
+		SccProjectUniqueName1 = GoodApp.Backend\\GoodApp.Backend.csproj
+		SccProjectName1 = GoodApp.Backend
+		SccLocalPath1 = GoodApp.Backend
+		SccProjectUniqueName2 = GoodApp.Data\\GoodApp.Data.csproj
+		SccProjectName2 = GoodApp.Data
+		SccLocalPath2 = GoodApp.Data
+		SccProjectUniqueName3 = TechwuliArsenal\\TechwuliArsenal.csproj
+		SccProjectName3 = TechwuliArsenal
+		SccLocalPath3 = TechwuliArsenal
+		SccProjectUniqueName4 = GoodApp.Database\\GoodApp.Database.sqlproj
+		SccProjectName4 = GoodApp.Database
+		SccLocalPath4 = GoodApp.Database
+	EndGlobalSection
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Debug|ARM = Debug|ARM
+		Debug|x64 = Debug|x64
+		Debug|x86 = Debug|x86
+		Release|Any CPU = Release|Any CPU
+		Release|ARM = Release|ARM
+		Release|x64 = Release|x64
+		Release|x86 = Release|x86
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{A04E21CD-0982-46FE-AB4C-0145129D7C03}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A04E21CD-0982-46FE-AB4C-0145129D7C03}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A04E21CD-0982-46FE-AB4C-0145129D7C03}.Debug|ARM.ActiveCfg = Debug|Any CPU
+		{A04E21CD-0982-46FE-AB4C-0145129D7C03}.Debug|x64.ActiveCfg = Debug|Any CPU
+		{A04E21CD-0982-46FE-AB4C-0145129D7C03}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{A04E21CD-0982-46FE-AB4C-0145129D7C03}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{A04E21CD-0982-46FE-AB4C-0145129D7C03}.Release|Any CPU.Build.0 = Release|Any CPU
+		{A04E21CD-0982-46FE-AB4C-0145129D7C03}.Release|ARM.ActiveCfg = Release|Any CPU
+		{A04E21CD-0982-46FE-AB4C-0145129D7C03}.Release|x64.ActiveCfg = Release|Any CPU
+		{A04E21CD-0982-46FE-AB4C-0145129D7C03}.Release|x86.ActiveCfg = Release|Any CPU
+		{9B8F302E-DBF2-4F75-9AA6-0FF3008290A4}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{9B8F302E-DBF2-4F75-9AA6-0FF3008290A4}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{9B8F302E-DBF2-4F75-9AA6-0FF3008290A4}.Debug|ARM.ActiveCfg = Debug|Any CPU
+		{9B8F302E-DBF2-4F75-9AA6-0FF3008290A4}.Debug|x64.ActiveCfg = Debug|Any CPU
+		{9B8F302E-DBF2-4F75-9AA6-0FF3008290A4}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{9B8F302E-DBF2-4F75-9AA6-0FF3008290A4}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{9B8F302E-DBF2-4F75-9AA6-0FF3008290A4}.Release|Any CPU.Build.0 = Release|Any CPU
+		{9B8F302E-DBF2-4F75-9AA6-0FF3008290A4}.Release|ARM.ActiveCfg = Release|Any CPU
+		{9B8F302E-DBF2-4F75-9AA6-0FF3008290A4}.Release|x64.ActiveCfg = Release|Any CPU
+		{9B8F302E-DBF2-4F75-9AA6-0FF3008290A4}.Release|x86.ActiveCfg = Release|Any CPU
+		{6491D7DA-2D1D-46DF-87FC-B3D95C6967AE}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{6491D7DA-2D1D-46DF-87FC-B3D95C6967AE}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{6491D7DA-2D1D-46DF-87FC-B3D95C6967AE}.Debug|ARM.ActiveCfg = Debug|Any CPU
+		{6491D7DA-2D1D-46DF-87FC-B3D95C6967AE}.Debug|ARM.Build.0 = Debug|Any CPU
+		{6491D7DA-2D1D-46DF-87FC-B3D95C6967AE}.Debug|x64.ActiveCfg = Debug|Any CPU
+		{6491D7DA-2D1D-46DF-87FC-B3D95C6967AE}.Debug|x64.Build.0 = Debug|Any CPU
+		{6491D7DA-2D1D-46DF-87FC-B3D95C6967AE}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{6491D7DA-2D1D-46DF-87FC-B3D95C6967AE}.Debug|x86.Build.0 = Debug|Any CPU
+		{6491D7DA-2D1D-46DF-87FC-B3D95C6967AE}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{6491D7DA-2D1D-46DF-87FC-B3D95C6967AE}.Release|Any CPU.Build.0 = Release|Any CPU
+		{6491D7DA-2D1D-46DF-87FC-B3D95C6967AE}.Release|ARM.ActiveCfg = Release|Any CPU
+		{6491D7DA-2D1D-46DF-87FC-B3D95C6967AE}.Release|ARM.Build.0 = Release|Any CPU
+		{6491D7DA-2D1D-46DF-87FC-B3D95C6967AE}.Release|x64.ActiveCfg = Release|Any CPU
+		{6491D7DA-2D1D-46DF-87FC-B3D95C6967AE}.Release|x64.Build.0 = Release|Any CPU
+		{6491D7DA-2D1D-46DF-87FC-B3D95C6967AE}.Release|x86.ActiveCfg = Release|Any CPU
+		{6491D7DA-2D1D-46DF-87FC-B3D95C6967AE}.Release|x86.Build.0 = Release|Any CPU
+		{70592709-6CDE-4761-A9FA-ECD95A4636F8}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{70592709-6CDE-4761-A9FA-ECD95A4636F8}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{70592709-6CDE-4761-A9FA-ECD95A4636F8}.Debug|Any CPU.Deploy.0 = Debug|Any CPU
+		{70592709-6CDE-4761-A9FA-ECD95A4636F8}.Debug|ARM.ActiveCfg = Debug|Any CPU
+		{70592709-6CDE-4761-A9FA-ECD95A4636F8}.Debug|ARM.Build.0 = Debug|Any CPU
+		{70592709-6CDE-4761-A9FA-ECD95A4636F8}.Debug|ARM.Deploy.0 = Debug|Any CPU
+		{70592709-6CDE-4761-A9FA-ECD95A4636F8}.Debug|x64.ActiveCfg = Debug|Any CPU
+		{70592709-6CDE-4761-A9FA-ECD95A4636F8}.Debug|x64.Build.0 = Debug|Any CPU
+		{70592709-6CDE-4761-A9FA-ECD95A4636F8}.Debug|x64.Deploy.0 = Debug|Any CPU
+		{70592709-6CDE-4761-A9FA-ECD95A4636F8}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{70592709-6CDE-4761-A9FA-ECD95A4636F8}.Debug|x86.Build.0 = Debug|Any CPU
+		{70592709-6CDE-4761-A9FA-ECD95A4636F8}.Debug|x86.Deploy.0 = Debug|Any CPU
+		{70592709-6CDE-4761-A9FA-ECD95A4636F8}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{70592709-6CDE-4761-A9FA-ECD95A4636F8}.Release|Any CPU.Build.0 = Release|Any CPU
+		{70592709-6CDE-4761-A9FA-ECD95A4636F8}.Release|Any CPU.Deploy.0 = Release|Any CPU
+		{70592709-6CDE-4761-A9FA-ECD95A4636F8}.Release|ARM.ActiveCfg = Release|Any CPU
+		{70592709-6CDE-4761-A9FA-ECD95A4636F8}.Release|ARM.Build.0 = Release|Any CPU
+		{70592709-6CDE-4761-A9FA-ECD95A4636F8}.Release|ARM.Deploy.0 = Release|Any CPU
+		{70592709-6CDE-4761-A9FA-ECD95A4636F8}.Release|x64.ActiveCfg = Release|Any CPU
+		{70592709-6CDE-4761-A9FA-ECD95A4636F8}.Release|x64.Build.0 = Release|Any CPU
+		{70592709-6CDE-4761-A9FA-ECD95A4636F8}.Release|x64.Deploy.0 = Release|Any CPU
+		{70592709-6CDE-4761-A9FA-ECD95A4636F8}.Release|x86.ActiveCfg = Release|Any CPU
+		{70592709-6CDE-4761-A9FA-ECD95A4636F8}.Release|x86.Build.0 = Release|Any CPU
+		{70592709-6CDE-4761-A9FA-ECD95A4636F8}.Release|x86.Deploy.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+EndGlobal

@@ -1,0 +1,12 @@
+<div class="image-container" style="background-image: url({{picture}})" />
+<div class="action"><i class="fa fa-clock-o"></i>{{getRemainTime()}}</div>
+<div class="challenge-container" ng-click="showDetails()">
+    <div class="progress">
+        <div class="progress-bar" role="progressbar" aria-valuenow="{{getPercent()}}" aria-valuemin="0" aria-valuemax="100" ng-style="progressStyle">
+        </div>
+    </div>
+    <div class="floating-label">
+        <a class="challenge-status">{{getProgressText()}}</a>
+        <a class="challenge-name">{{name}}</a>
+    </div>
+</div>

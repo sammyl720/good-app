@@ -1,0 +1,33 @@
+﻿<div ng-show="!loadingProfile" class="with-bottom-button">
+    <div class="flex flex-horizontal center-justified content-space-around space-around">
+        <section>
+            <div ng-click="pickNewPhoto()" class="photo photo-lg" ng-class="{fading:changingPhoto, clickable:!changingPhoto}" style="background-image: url({{profile.photoPath}})">
+            </div>
+        </section>
+        <div class="weight-3">
+            <span class="txt-large">{{profile.name}}</span>
+            <p>
+                <label class="light">
+                    Doing good since {{displayTimeSpan(profile.dateCreated)}}
+                </label>
+            </p>
+        </div>
+    </div>
+
+    <label class="txt-large">My Network</label>
+    <section class="flex flex-horizontal">
+        <section class="weight-1">
+            <span class="txt-large">{{overview.friendsCount}}</span>
+            <p class="title light">Friends</p>
+        </section>
+        <section class="weight-3">
+            <span class="txt-large">{{overview.networkDeedCount}}</span>
+            <p class="title light">Combined Deeds</p>
+        </section>
+    </section>
+</div>
+<div ng-show="loadingProfile" class="txt-align-center loading-screen">
+    <i class="fa fa-circle-o-notch fa-spin fa-3x vertical-center"></i>
+</div>
+
+<input id="photoPicker" type="file" style="display: none" accept="image/*" />
